@@ -1,4 +1,4 @@
-# Play this
+# Play this --
 - Open tor browser set connection.
 - play main_playnews_scrap.py
 - play main_8base_scrap.py
