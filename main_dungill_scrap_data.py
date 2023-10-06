@@ -33,7 +33,7 @@ session = get_tor_session()
 
 # start from page 1
 link = "http://p66slxmtum2ox4jpayco6ai3qfehd5urgrs4oximjzklxcol264driqd.onion/"
-
+gentex_link = 'http://p66slxmtum2ox4jpayco6ai3qfehd5urgrs4oximjzklxcol264driqd.onion/lot3.html'
 try:    
     print("=====START=====")
     # Set up Firefox WebDriver with Tor proxy settings
@@ -104,15 +104,17 @@ try:
                         arr1 = div.text.splitlines()
                         victim_name = arr1[0]
                         publication_date = arr1[1]
+                        # print(victim_name)
+                        # print(publication_date)
                         temp_arr.append(victim_name)
                         temp_arr.append(publication_date)
                         # print('************')
-                    elif index == 4:
+                    elif index == 4 and driver.current_url != gentex_link:
                         # 'victim_website','victim_information'
                         # print(div.text)
                         
                         arr2 = div.text.splitlines()
-                        print(arr2)
+                        # print(arr2)
 
                         # append all links to related to company
                         # victim_websites = ''
@@ -129,6 +131,7 @@ try:
                         # only the suppose main website
                         victim_website = arr2[1]
                         temp_arr.append(victim_website)
+                        # print(victim_website)
 
                         start_victim_information_index = 0
                         for index,str in enumerate(arr2):
@@ -139,10 +142,54 @@ try:
                             else:
                                 start_victim_information_index = index
                                 break
-                        str_arr = arr2[start_victim_information_index::]
-                        victim_information = ' '.join(str_arr)
+                        #str_arr = arr2[start_victim_information_index::]
+                        #victim_information = ' '.join(str_arr)
+                        victim_information =arr2[start_victim_information_index]
                         temp_arr.append(victim_information)
+                        print(victim_information)
                         # print('************')
+                        
+                # index 5 only for Gentex
+                    elif index == 5 and driver.current_url == gentex_link:
+                        # 'victim_website','victim_information'
+                        # print(div.text)
+                        arr2 = div.text.splitlines()
+                        # print(arr2)
+
+                        # append all links to related to company
+                        # victim_websites = ''
+                        # for str in arr2:
+                        #     if str[0:4] == 'http':
+                        #         print(str)
+                        #         victim_websites = victim_websites + str  + '\n'
+                        # else:
+                        #     pass
+                        # print('-------')
+                        # print(victim_websites)
+                        # temp_arr.append(victim_websites)
+
+                        # only the suppose main website
+                        victim_website = arr2[1]
+                        temp_arr.append(victim_website)
+                        print(victim_website)
+
+                        start_victim_information_index = 0
+                        for index,str in enumerate(arr2):
+                            if index == 0:
+                                continue
+                            elif str[0:4] == 'http':
+                                continue
+                            else:
+                                start_victim_information_index = index
+                                break
+
+                        # str_arr = arr2[start_victim_information_index::]
+                        # victim_information = ' '.join(str_arr)
+
+                        victim_information =arr2[start_victim_information_index]
+                        temp_arr.append(victim_information)
+                        print(victim_information)
+                        print('************')
                     elif index > 5:
                         break
                 attack_information_pre_tag = main_div.find_element(By.TAG_NAME,'pre')
