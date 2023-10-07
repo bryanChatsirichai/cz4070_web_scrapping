@@ -1,13 +1,6 @@
 arr  = ['abc','123','http']
+str = ''
+for s in arr:
+    str = str + s + '\n'
 
-info = ''
-website = ''
-
-for str in arr:
-    if str[0:4] == 'http':
-        website = str
-    else:
-        info = info + str + '\n'
-
-print(website)
-print(info)
+print(str)
