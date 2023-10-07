@@ -32,7 +32,7 @@ session = get_tor_session()
 # print(requests.get("http://httpbin.org/ip").text)
 
 # start from main page
-link = "http://noescapemsqxvizdxyl7f7rmg5cdjwp33pg2wpmiaaibilb4btwzttad.onion/"
+link = "http://noescapemsqxvizdxyl7f7rmg5cdjwp33pg2wpmiaaibilb4btwzttad.onion"
 
 try:    
     print("=====START=====")
@@ -46,7 +46,7 @@ try:
     firefox_options.set_preference('network.proxy.socks_remote_dns', True)
 
     # array of array victims data
-    data_header = ['victim_name','victim_location','victim_website','victim_hotline','victim_email','victim_background','attack_information']
+    data_header = ['victim_name','victim_location','victim_website','victim_hotline','victim_email','victim_background','attack_information','total_data','publish_date']
     victims_data = []
     victims_data.append(data_header)
 
@@ -91,6 +91,14 @@ try:
             # try web scrab every new tab opened
             try:    
                 print('--------Start Victim Info--------')
+                
+                # get from the top 'header'
+                publish_date_div = driver.find_element(By.CSS_SELECTOR,'.me-4.d-flex.align-items-center')
+                publish_date = publish_date_div.find_element(By.TAG_NAME,'small').text
+                # print(publish_date)
+                print('***************')
+                
+
                 # 'victim_name','victim_location','victim_website','victim_hotline','victim_email'
                 company_basic_info_div = driver.find_element(By.CSS_SELECTOR,'.bg-cover.rounded-2.p-4.mb-3')
                 # print(company_basic_info_div.text)
@@ -121,6 +129,7 @@ try:
                 temp_arr.append(victim_email)
 
                 print('***************')
+                
                 company_main_info_div = driver.find_element(By.CSS_SELECTOR,'.bg-cover.rounded-2.p-4.mb-3.fs-5.text-justify')
                 # print(company_main_info_div.text)
                 arr2 = company_main_info_div.text.splitlines()
@@ -133,15 +142,23 @@ try:
                         continue
                     else:
                         attack_information = attack_information + str + '\n'
-                print(attack_information)
+                # print(attack_information)
                 temp_arr.append(victim_background)
                 temp_arr.append(attack_information)
+                print('***************')
+
+                #'total_data','publish_date'
+                total_data_div = driver.find_element(By.CSS_SELECTOR,'.text-danger.h2.mb-0.fs-5')
+                total_data = total_data_div.find_element(By.CLASS_NAME,'fw-bold').text
+                temp_arr.append(total_data)
+                temp_arr.append(publish_date)
                 print('--------End Victim Info--------')
             except Exception as error:
                 print('error-3 ',error)
             finally:
                 # close current victim tab and go back to main tab
                 print(temp_arr)
+                print(len(temp_arr))
                 victims_data.append(temp_arr)
                 driver.close()
                 driver.switch_to.window(driver.window_handles[0])
