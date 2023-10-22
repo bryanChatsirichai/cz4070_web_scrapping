@@ -1,4 +1,6 @@
-# Play this ------
+# ----- Group 18 shared repository -----
+
+## ----- Play this -----
 
 - Open tor browser set connection.
 - play main_playnews_scrap.py
@@ -9,6 +11,7 @@
 - Rest of the scrips are for testing at the different sites.
 - If crash or does not connect restart tor browser and play the code again.
 
-## take note
+## Take Note
+
 - Excel file will be created when done. (GitHub version may not be up to date the suppose correct version will be uploaded with the report at blackboard submission).
 - Certain configuration may fail due to vm, port, tor connection so configure to fix.
